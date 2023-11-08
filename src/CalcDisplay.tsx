@@ -155,13 +155,13 @@ function Display(){
             <div className="container">
                 
                 <h4>Questions and Answers</h4>
-                <p className="text">Q:Does this calculator show total plates needed or platest per side?</p>
+                <p className="text">Q:Does this calculator show total plates needed or plates per side?</p>
 
                 <p className="text">A: This one shows you the amount of plates you need on each side. For example, for 135 in pounds, it says you need one "45". </p>
 
                 <p className="text">Q: What algorithm is used for this calculator?</p>
 
-                <p className="text">A: It's a greedy algorithm modified from one <a href="https://gist.github.com/tommyod">https://gist.github.com/tommyod</a>used in an example. Specifcally here <a href="https://gist.github.com/tommyod/bdd13a83d3577634b91b79b1c00bce14">https://gist.github.com/tommyod/bdd13a83d3577634b91b79b1c00bce14 </a></p>
+                <p className="text">A: It's a greedy algorithm modified from one <a href="https://gist.github.com/tommyod">https://gist.github.com/tommyod</a> used in an example. Specifically, here <a href="https://gist.github.com/tommyod/bdd13a83d3577634b91b79b1c00bce14">https://gist.github.com/tommyod/bdd13a83d3577634b91b79b1c00bce14 </a></p>
 
             </div>
             
