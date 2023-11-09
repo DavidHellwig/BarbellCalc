@@ -47,16 +47,25 @@ function calculatePlatesNeeded(option:number, userBarbellWeight:number, desiredW
 
 
 function Display(){
-    //These will be used for barbell, kilos or pounds, and desired weights
+    //These states will be used for barbell, kilos or pounds, and desired weights
     const [weight,setWeight] = useState(0);
 
-    const [barbellWeight, setBarbellWeight] = useState(45)
+    const [barbellWeight, setBarbellWeight] = useState(45);
 
     const [system,swap] = useState(1);
 
     const imperial =  [45.0, 35.0, 25.0, 10.0, 5.0, 2.5, 1, 0.75, 0.5, 0.25];
 
     const met = [25, 20, 15, 10.0, 5.0, 2.5, 1.5, 1, 0.5];
+
+    //This state will be theme
+    const [isDay, changeTheme] = useState(true);
+
+    let toggleTheme = () => {
+        changeTheme(!isDay);
+
+    }
+
 
     //Clear results
     let clear = ()=>{
@@ -89,6 +98,7 @@ function Display(){
 
 
     return (
+        <div  className={isDay ? "day":"night"}>
         <view>
             <h1 className="title">Barbell Calculator</h1>
 
@@ -124,6 +134,10 @@ function Display(){
                     
                     <button className="box" onClick={calculate}>Calculate</button>
 
+                    <button onClick={toggleTheme}>
+                    {isDay ? 'Light Mode' : 'Dark Mode'}
+                </button>
+
                     <hr></hr>
                     
 
@@ -155,17 +169,18 @@ function Display(){
             <div className="container">
                 
                 <h4>Questions and Answers</h4>
-                <p className="text">Q:Does this calculator show total plates needed or platest per side?</p>
+                <p className="text">Q:Does this calculator show total plates needed or plates per side?</p>
 
                 <p className="text">A: This one shows you the amount of plates you need on each side. For example, for 135 in pounds, it says you need one "45". </p>
 
                 <p className="text">Q: What algorithm is used for this calculator?</p>
 
-                <p className="text">A: It's a greedy algorithm modified from one <a href="https://gist.github.com/tommyod">https://gist.github.com/tommyod</a>used in an example. Specifcally here <a href="https://gist.github.com/tommyod/bdd13a83d3577634b91b79b1c00bce14">https://gist.github.com/tommyod/bdd13a83d3577634b91b79b1c00bce14 </a></p>
+                <p className="text">A: It's a greedy algorithm modified from one <a href="https://gist.github.com/tommyod">https://gist.github.com/tommyod</a> used in an example. Specifically, here <a href="https://gist.github.com/tommyod/bdd13a83d3577634b91b79b1c00bce14">https://gist.github.com/tommyod/bdd13a83d3577634b91b79b1c00bce14 </a></p>
 
             </div>
             
         </view>
+        </div>
     )
 }
 export default Display;
