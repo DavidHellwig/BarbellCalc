@@ -47,16 +47,25 @@ function calculatePlatesNeeded(option:number, userBarbellWeight:number, desiredW
 
 
 function Display(){
-    //These will be used for barbell, kilos or pounds, and desired weights
+    //These states will be used for barbell, kilos or pounds, and desired weights
     const [weight,setWeight] = useState(0);
 
-    const [barbellWeight, setBarbellWeight] = useState(45)
+    const [barbellWeight, setBarbellWeight] = useState(45);
 
     const [system,swap] = useState(1);
 
     const imperial =  [45.0, 35.0, 25.0, 10.0, 5.0, 2.5, 1, 0.75, 0.5, 0.25];
 
     const met = [25, 20, 15, 10.0, 5.0, 2.5, 1.5, 1, 0.5];
+
+    //This state will be theme
+    const [isDay, changeTheme] = useState(true);
+
+    let toggleTheme = () => {
+        changeTheme(!isDay);
+
+    }
+
 
     //Clear results
     let clear = ()=>{
@@ -89,6 +98,7 @@ function Display(){
 
 
     return (
+        <div  className={isDay ? "day":"night"}>
         <view>
             <h1 className="title">Barbell Calculator</h1>
 
@@ -123,6 +133,10 @@ function Display(){
                     </input>
                     
                     <button className="box" onClick={calculate}>Calculate</button>
+
+                    <button onClick={toggleTheme}>
+                    {isDay ? 'Light Mode' : 'Dark Mode'}
+                </button>
 
                     <hr></hr>
                     
@@ -166,6 +180,7 @@ function Display(){
             </div>
             
         </view>
+        </div>
     )
 }
 export default Display;

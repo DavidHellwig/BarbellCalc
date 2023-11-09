@@ -3,32 +3,29 @@
     
     text-align: center;
     justify-content: center;
-    background-color: #ffffff;
+    
   }
   
   .text {
     font-size: 12px;
-    color: #333;
+    
   }
   .title {
     text-align: center;
     justify-content: center;
-    color: #333;
-    background-color: #ffffff;
+    
   }
   .list {
     text-align: center;
     justify-content: center;
-    color: #333;
-    background-color: #ffffff;
+    
   }
   .table {
     
     font-size: 34px;
     text-align: center;
     justify-content: center;
-    color: #333;
-    background-color: #ffffff;
+    
   }
 .box {
     font-size: 15px;
@@ -36,8 +33,7 @@
     margin:10px;
     text-align: center;
     justify-content: center;
-    color: #333;
-    background-color: #ffffff;
+   
 }
 .check {
   font-size: 30px;
@@ -45,8 +41,6 @@
   width: 30px;
   height: 30px;
   
-  color: #333;
-  background-color: #ffffff;
 }
 .con2 {
   display: flex;
@@ -57,6 +51,16 @@
 .text2 {
   font-size: 24px;
   margin: 10px;
+  
+}
+
+.night {
+  background-color: #333;
+  color: #fff;
+
+}
+.day {
+  background-color: #ffffff;
   color: #333;
 }
 
