@@ -1,20 +1,12 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import './DisplayStyles.css'
 
 
 //Function for calculating the plates needed for a barbell
  
 
-function calculatePlatesNeeded(option:number, userBarbellWeight:number, desiredWeight:number) {
+function calculatePlatesNeeded(option:number[], userBarbellWeight:number, desiredWeight:number) {
     let remainingWeight = 0;
-    
-
-    let barbellPlates:number[] = [];
-    if (option === 0) {
-        barbellPlates = [25, 20, 15, 10.0, 5.0, 2.5, 1.5, 1, 0.5];
-    } else if (option === 1) {
-        barbellPlates = [45.0, 35.0, 25.0, 10.0, 5.0, 2.5, 1, 0.75, 0.5, 0.25];
-    }
 
     remainingWeight = desiredWeight - userBarbellWeight;
 
@@ -22,9 +14,9 @@ function calculatePlatesNeeded(option:number, userBarbellWeight:number, desiredW
 
     /* This algorithm will determine the amount of plates that are needed to load the bar to the desired
      * weight. This will take into account the weight of the bar. */
-    const plateCount = new Array(barbellPlates.length).fill(0);
-    for (let i = 0; i < barbellPlates.length; i++) {
-        const plate = barbellPlates[i];
+    const plateCount = new Array(option.length).fill(0);
+    for (let i = 0; i < option.length; i++) {
+        const plate = option[i];
 
         if (plate * 2 <= remainingWeight) {
             const multiplier = Math.floor(remainingWeight / plate);
@@ -42,53 +34,70 @@ function calculatePlatesNeeded(option:number, userBarbellWeight:number, desiredW
         throw new Error("Impossible to reach given weight.");
     }
     return plateCount;
+    
 
 }
 
 
 function Display(){
-    //These states will be used for barbell, kilos or pounds, and desired weights
+    //These states will be used for barbell, kilos or pounds,desired weights and theme
+    const imperial =  [45.0, 35.0, 25.0, 10.0, 5.0, 2.5, 1, 0.75, 0.5, 0.25];
+
+    const imperialNoThirtyFives = [45.0, 25.0, 10.0, 5.0, 2.5, 1, 0.75, 0.5, 0.25];
+
+    const met = [25, 20, 15, 10.0, 5.0, 2.5, 1.5, 1, 0.5];
+
     const [weight,setWeight] = useState(0);
 
     const [barbellWeight, setBarbellWeight] = useState(45);
 
-    const [system,swap] = useState(1);
+    const [system,swapSystem] = useState(imperial);
 
-    const imperial =  [45.0, 35.0, 25.0, 10.0, 5.0, 2.5, 1, 0.75, 0.5, 0.25];
+    const[stringSystem,swap] = useState("")
 
-    const met = [25, 20, 15, 10.0, 5.0, 2.5, 1.5, 1, 0.5];
-
-    //This state will be theme
     const [isDay, changeTheme] = useState(true);
 
+    //switches the theme
     let toggleTheme = () => {
         changeTheme(!isDay);
 
     }
 
 
-    //Clear results
+    //Clears results so that old results are not present when switching measurement systems
     let clear = ()=>{
-        snapBack(calculatePlatesNeeded(1,0,0))
+        updateActualPlatesNeeded(calculatePlatesNeeded(system,0,0))
     }
-    //make imperial or metric
-    let handleSystem = () =>{
-        if (system === 0){
-            swap(1);
 
-        }
-        else{
-            swap(0);
+    
+    //Changes the measurement system 
+    useEffect(() => {
+        
+        switch (stringSystem) {
+          case 'imperial':
+            swapSystem(imperial);
+            
+            break;
+          case 'met':
+            swapSystem(met);
+            
+            break;
+          case 'imperialNoThirtyFives':
+            swapSystem(imperialNoThirtyFives);
+            
+            break;
+          default:
+            break;
         }
         clear();
-    }
+      }, [stringSystem]);
 
-    const [reality,snapBack] = useState([0]);
+    const [actualPlatesNeeded,updateActualPlatesNeeded] = useState(imperial);
 
     //get results
     let calculate = () => {
         try{
-            snapBack(calculatePlatesNeeded(system,barbellWeight,weight))
+            updateActualPlatesNeeded(calculatePlatesNeeded(system,barbellWeight,weight))
         }
         catch(e){
             alert(e)
@@ -106,11 +115,16 @@ function Display(){
             
             <div className="con2">
 
-                <label className="text2">Metric</label>
+                
+                <label className="text2">Measurement System</label>
+                <select className="check" value={stringSystem} onChange={(e)=>swap(e.target.value)}>
+                        
+                        <option value="imperial">Imperial</option>
 
-            <input className="check" type="checkbox" onChange={handleSystem}>
+                        <option value="met">Metric</option>
 
-                </input>
+                        <option value="imperialNoThirtyFives">Imperial (No 35s)</option>
+                </select>
 
                 <label>
 
@@ -151,17 +165,15 @@ function Display(){
 
                 <tr>
                     <th>
-                        Plates({system === 1 ? "Pounds": "Kilograms"})
+                        Plates({stringSystem === "met" ? "Kilograms": "Pounds"})
                     </th>
                     
                 </tr>
-                {system === 1 ? imperial.map((plate,index)=>
+                {system.map((plate,index)=>
                 <tr>
-                {plate} : {system === 1 ? reality[index] : 0}
-              </tr>): met.map((plate,index)=>
-                <tr>
-                {plate} : {system === 0 ? reality[index] : 0}
+                {plate} : {actualPlatesNeeded[index]}
               </tr>)}
+                
               
                 </table>
                 
