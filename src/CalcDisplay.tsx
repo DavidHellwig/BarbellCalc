@@ -149,7 +149,7 @@ function Display(){
                     <button className="box" onClick={calculate}>Calculate</button>
 
                     <button onClick={toggleTheme}>
-                    {isDay ? 'Light Mode' : 'Dark Mode'}
+                    {isDay ? 'Dark Mode' : 'Light Mode'}
                 </button>
 
                     <hr></hr>
